@@ -16,12 +16,11 @@
 @property (weak, nonatomic) id<ECDropDownMenuViewDataSource> dataSource;
 @property (weak, nonatomic) id<ECDropDownMenuViewDelegate> delegate;
 @property (assign, nonatomic, readonly) BOOL isVisiable;
-
+@property (nonatomic, readonly) UITableView *tableView;
 
 - (void)showInView:(UIView *)view;
 - (void)dismiss;
 - (void)reloadData;
-
 
 @end
 

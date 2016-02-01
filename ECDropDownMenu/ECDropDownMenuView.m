@@ -10,7 +10,7 @@
 
 @interface ECDropDownMenuView ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic, readwrite) UITableView *tableView;
 @property (assign, nonatomic, readwrite) BOOL isVisiable;
 
 @end
