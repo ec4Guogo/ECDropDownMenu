@@ -28,13 +28,10 @@
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor greenColor];
-
         [self addSubview:self.titleLabel];
         [self addSubview:self.arrowImageView];
 
         [self setupLayoutForViews];
-        
         
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         [self addGestureRecognizer:gesture];
@@ -57,7 +54,6 @@
 - (UILabel *)titleLabel{
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        _titleLabel.backgroundColor = [UIColor grayColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -81,7 +77,7 @@
     }
     [UIView animateWithDuration:0.36 animations:^{
         
-        _arrowImageView.transform = CGAffineTransformRotate(_arrowImageView.transform, - M_PI_2);
+        _arrowImageView.transform = CGAffineTransformRotate(_arrowImageView.transform, - M_PI);
     }completion:^(BOOL finished) {
         if (finished) {
             tapGesture.enabled = YES;
@@ -165,9 +161,9 @@
     UIGraphicsBeginImageContext(CGSizeMake(width, height));
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGPoint sPoints[3];
-    sPoints[0] =CGPointMake(width, 0);
-    sPoints[1] =CGPointMake(width, height);
-    sPoints[2] =CGPointMake(0, height / 2);
+    sPoints[0] =CGPointMake(0, 0);
+    sPoints[1] =CGPointMake(width, 0);
+    sPoints[2] =CGPointMake(width / 2, height);
     CGContextAddLines(context, sPoints, 3);
     CGContextClosePath(context);
     CGContextDrawPath(context, kCGPathFillStroke);

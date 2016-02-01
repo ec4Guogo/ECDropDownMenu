@@ -8,11 +8,11 @@
 
 #import "ViewController.h"
 #import "ECDropDownMenuTitleView.h"
-#import "ECDropDownMenuTableView.h"
+#import "ECDropDownMenuView.h"
 
-@interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ViewController ()
 
-@property (strong, nonatomic) ECDropDownMenuTableView *menuTableView;
+@property (strong, nonatomic) ECDropDownMenuView *menuTableView;
 @property (strong, nonatomic) ECDropDownMenuTitleView *titleView;
 @end
 
@@ -22,9 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    _menuTableView = [[ECDropDownMenuTableView alloc] initWithFrame:self.view.bounds];
-    _menuTableView.menuTableViewDataSource = self;
-    _menuTableView.menuTableViewDelegate = self;
+    _menuTableView = [[ECDropDownMenuView alloc] initWithFrame:self.view.bounds];
     
     _titleView = [[ECDropDownMenuTitleView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     _titleView.title = @"测试标题测测试标题测测试标题测测试标题测测试标题测";
@@ -46,35 +44,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 13;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    }
-    cell.textLabel.text = [NSString stringWithFormat:@"Menu %ld", (long)indexPath.row];
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    _titleView.title = [NSString stringWithFormat:@"Menu %ld", (long)indexPath.row];
-    [_menuTableView dismiss];
-    [_menuTableView reloadData];
-}
 
 @end

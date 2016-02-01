@@ -1,5 +1,5 @@
 //
-//  ECDropDownMenuTableView.h
+//  ECDropDownMenuView.h
 //  ECDropDownMenuDemo
 //
 //  Created by Eric Wang on 16/1/28.
@@ -9,14 +9,10 @@
 #import <UIKit/UIKit.h>
 
 //TODO: ECDropDownMenuTableView
-@interface ECDropDownMenuTableView : UIView
-
-@property (assign, nonatomic) id<UITableViewDelegate> menuTableViewDelegate;
-@property (assign, nonatomic) id<UITableViewDataSource> menuTableViewDataSource;
+@interface ECDropDownMenuView : UIView
 
 - (void)showInView:(UIView *)view;
 - (void)dismiss;
-
 - (void)reloadData;
 
 @property (assign, nonatomic, readonly) BOOL isVisiable;

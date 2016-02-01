@@ -14,7 +14,7 @@
 		0725FE071C59E5AD006F36FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0725FE061C59E5AD006F36FA /* Assets.xcassets */; };
 		0725FE0A1C59E5AD006F36FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0725FE081C59E5AD006F36FA /* LaunchScreen.storyboard */; };
 		0725FE141C59E628006F36FA /* ECDropDownMenuTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0725FE131C59E628006F36FA /* ECDropDownMenuTitleView.m */; };
-		0725FE171C59E661006F36FA /* ECDropDownMenuTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0725FE161C59E661006F36FA /* ECDropDownMenuTableView.m */; };
+		0725FE171C59E661006F36FA /* ECDropDownMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0725FE161C59E661006F36FA /* ECDropDownMenuView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +30,8 @@
 		0725FE0B1C59E5AD006F36FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0725FE121C59E628006F36FA /* ECDropDownMenuTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECDropDownMenuTitleView.h; sourceTree = "<group>"; };
 		0725FE131C59E628006F36FA /* ECDropDownMenuTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECDropDownMenuTitleView.m; sourceTree = "<group>"; };
-		0725FE151C59E661006F36FA /* ECDropDownMenuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECDropDownMenuTableView.h; sourceTree = "<group>"; };
-		0725FE161C59E661006F36FA /* ECDropDownMenuTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECDropDownMenuTableView.m; sourceTree = "<group>"; };
+		0725FE151C59E661006F36FA /* ECDropDownMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECDropDownMenuView.h; sourceTree = "<group>"; };
+		0725FE161C59E661006F36FA /* ECDropDownMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECDropDownMenuView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +91,8 @@
 			children = (
 				0725FE121C59E628006F36FA /* ECDropDownMenuTitleView.h */,
 				0725FE131C59E628006F36FA /* ECDropDownMenuTitleView.m */,
-				0725FE151C59E661006F36FA /* ECDropDownMenuTableView.h */,
-				0725FE161C59E661006F36FA /* ECDropDownMenuTableView.m */,
+				0725FE151C59E661006F36FA /* ECDropDownMenuView.h */,
+				0725FE161C59E661006F36FA /* ECDropDownMenuView.m */,
 			);
 			name = ECDropDownMenu;
 			path = ../../ECDropDownMenu;
@@ -168,7 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0725FE171C59E661006F36FA /* ECDropDownMenuTableView.m in Sources */,
+				0725FE171C59E661006F36FA /* ECDropDownMenuView.m in Sources */,
 				0725FE021C59E5AD006F36FA /* ViewController.m in Sources */,
 				0725FDFF1C59E5AD006F36FA /* AppDelegate.m in Sources */,
 				0725FDFC1C59E5AD006F36FA /* main.m in Sources */,
@@ -319,6 +319,7 @@
 				0725FE101C59E5AD006F36FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

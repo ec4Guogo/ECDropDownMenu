@@ -6,16 +6,16 @@
 //  Copyright © 2016年 Eric. All rights reserved.
 //
 
-#import "ECDropDownMenuTableView.h"
+#import "ECDropDownMenuView.h"
 
-@interface ECDropDownMenuTableView ()
+@interface ECDropDownMenuView ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic, readwrite) BOOL isVisiable;
 
 @end
 
-@implementation ECDropDownMenuTableView
+@implementation ECDropDownMenuView
 
 - (instancetype)init{
     self = [self initWithFrame:CGRectZero];
@@ -41,20 +41,39 @@
         _tableView.tableFooterView = [UIView new];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
     }
     return _tableView;
 }
 
-#pragma mark - Setter
+#pragma mark - UITableViewDataSource
 
-- (void)setMenuTableViewDelegate:(id<UITableViewDelegate>)menuTableViewDelegate{
-    _menuTableViewDelegate = menuTableViewDelegate;
-    self.tableView.delegate = menuTableViewDelegate;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
 }
 
-- (void)setMenuTableViewDataSource:(id<UITableViewDataSource>)menuTableViewDataSource{
-    _menuTableViewDataSource = menuTableViewDataSource;
-    self.tableView.dataSource = menuTableViewDataSource;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 13;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"Menu %ld", (long)indexPath.row];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
 }
 
 #pragma mark - PublicMethod
@@ -75,7 +94,7 @@
     
     self.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:0];
     
-    __weak ECDropDownMenuTableView *weakSelf = self;
+    __weak ECDropDownMenuView *weakSelf = self;
     [UIView animateWithDuration:0.36 animations:^{
         weakSelf.tableView.frame = weakSelf.bounds;
         weakSelf.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
@@ -91,7 +110,7 @@
     
     CGFloat red, green, blue, alpha;
     [self.backgroundColor getRed:&red green:&green blue:&blue alpha:&alpha];
-    __weak ECDropDownMenuTableView *weakSelf = self;
+    __weak ECDropDownMenuView *weakSelf = self;
     [UIView animateWithDuration:0.36 animations:^{
         weakSelf.tableView.frame = frame;
         weakSelf.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:0];
