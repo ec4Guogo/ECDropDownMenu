@@ -47,33 +47,46 @@
     return _tableView;
 }
 
+#pragma mark - Setter
+
+- (void)setDataSource:(id<ECDropDownMenuViewDataSource>)dataSource{
+    _dataSource = dataSource;
+    self.tableView.dataSource = self;
+}
+
+- (void)setDelegate:(id<ECDropDownMenuViewDelegate>)delegate{
+    _delegate = delegate;
+    self.tableView.delegate = self;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return [self.dataSource dropDownMenuView:self numberOfSectionsInTableView:tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 13;
+    return [self.dataSource dropDownMenuView:self numberOfRowsInSection:section inTableView:tableView];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    }
-    cell.textLabel.text = [NSString stringWithFormat:@"Menu %ld", (long)indexPath.row];
-    return cell;
+    return [self.dataSource dropDownMenuView:self cellForRowAtIndexPath:indexPath inTableView:tableView];
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dropDownMenuView:heightForRowAtIndexPath:inTableView:)]) {
+        return [self.delegate dropDownMenuView:self heightForRowAtIndexPath:indexPath inTableView:tableView];
+    }
     return 44;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dropDownMenuView:didSelectRowAtIndexPath:inTableView:)]) {
+        [self.delegate dropDownMenuView:self didSelectRowAtIndexPath:indexPath inTableView:tableView];
+    }
+    [self dismiss];
 }
 
 #pragma mark - PublicMethod
