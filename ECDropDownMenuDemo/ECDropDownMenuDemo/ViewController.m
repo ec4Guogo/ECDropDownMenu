@@ -73,6 +73,7 @@
 
 - (void)dropDownMenuView:(ECDropDownMenuView *)dropDownMenuView didSelectRowAtIndexPath:(NSIndexPath *)indexPath inTableView:(UITableView *)tableView{
     _titleView.title = [NSString stringWithFormat:@"Menu %ld", (long)indexPath.row];
+    [_titleView startArrowAnimationWithCompletion:nil];
 }
 
 @end

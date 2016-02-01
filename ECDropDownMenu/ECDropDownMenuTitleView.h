@@ -17,6 +17,8 @@ typedef void(^TapDropDownMenuTitleViewBlock)(ECDropDownMenuTitleView *titleView)
 
 @property (strong, nonatomic) NSString *title;
 
+- (void)startArrowAnimationWithCompletion:(void (^)(BOOL finished))completion;
+
 - (void)setTapDropDownMenuTitleViewBlock:(TapDropDownMenuTitleViewBlock)tapBlock;
 
 @end

@@ -76,16 +76,23 @@
     if (self.tapDropDownMenuTitleViewBlock) {
         self.tapDropDownMenuTitleViewBlock(self);
     }
-    [UIView animateWithDuration:0.36 animations:^{
-        
-        _arrowImageView.transform = CGAffineTransformRotate(_arrowImageView.transform, - M_PI);
-    }completion:^(BOOL finished) {
+    
+    __weak UITapGestureRecognizer *weakTapGesture = tapGesture;
+    [self startArrowAnimationWithCompletion:^(BOOL finished) {
         if (finished) {
-            tapGesture.enabled = YES;
+            weakTapGesture.enabled = YES;
         }
     }];
+    
 }
 
+#pragma mark - PublicMethod
+
+- (void)startArrowAnimationWithCompletion:(void (^)(BOOL finished))completion{
+    [UIView animateWithDuration:0.36 animations:^{
+        _arrowImageView.transform = CGAffineTransformRotate(_arrowImageView.transform, - M_PI);
+    }completion:completion];
+}
 
 
 #pragma mark - UtilityMethod
