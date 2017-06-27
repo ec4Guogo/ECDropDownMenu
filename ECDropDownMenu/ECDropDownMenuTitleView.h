@@ -16,8 +16,13 @@ typedef void(^TapDropDownMenuTitleViewBlock)(ECDropDownMenuTitleView *titleView)
 @interface ECDropDownMenuTitleView : UIView
 
 @property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) UILabel *titleLabel;
 
-- (void)startArrowAnimationWithCompletion:(void (^)(BOOL finished))completion;
+
+@property (strong, nonatomic) UIColor *normalArrowColor;
+@property (strong, nonatomic) UIColor *selectedArrowColor;
+@property (assign, nonatomic) BOOL isSeleted;
+
 
 - (void)setTapDropDownMenuTitleViewBlock:(TapDropDownMenuTitleViewBlock)tapBlock;
 

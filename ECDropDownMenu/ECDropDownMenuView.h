@@ -57,4 +57,6 @@
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
                 inTableView:(UITableView *)tableView;
 
+- (CGRect)frameForDropDownMenuView:(ECDropDownMenuView *)dropDownMenuView;
+
 @end

@@ -12,9 +12,11 @@
 
 @interface ECDropDownMenuTitleView ()
 
-@property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UIImageView *arrowImageView;
 @property (copy, nonatomic) TapDropDownMenuTitleViewBlock tapDropDownMenuTitleViewBlock;
+
+@property (strong, nonatomic) UIImage *normalArrowImage;
+@property (strong, nonatomic) UIImage *selectedArrowImage;
 
 @end
 
@@ -31,7 +33,6 @@
     if (self) {
         [self addSubview:self.titleLabel];
         [self addSubview:self.arrowImageView];
-
         [self setupLayoutForViews];
         
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
@@ -41,12 +42,25 @@
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self addSubview:self.titleLabel];
+        [self addSubview:self.arrowImageView];
+        [self setupLayoutForViews];
+        
+        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        [self addGestureRecognizer:gesture];
+    }
+    return self;
+}
+
 #pragma mark - Getter
 
 - (UIImageView *)arrowImageView{
     if (!_arrowImageView) {
         _arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-        _arrowImageView.image = [self drawArrowImageWithWidth:10 height:10];
+        _arrowImageView.image = [self drawArrowImageWithWidth:10 height:10 color:[UIColor blackColor]];
         _arrowImageView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return _arrowImageView;
@@ -69,9 +83,32 @@
     self.titleLabel.text = _title;
 }
 
+- (void)setNormalArrowColor:(UIColor *)normalArrowColor{
+    _normalArrowColor = normalArrowColor;
+    self.normalArrowImage = [self drawArrowImageWithWidth:10 height:10 color:normalArrowColor];
+    _arrowImageView.image = self.isSeleted ? self.selectedArrowImage : self.normalArrowImage;
+
+}
+
+- (void)setSelectedArrowColor:(UIColor *)selectedArrowColor{
+    _selectedArrowColor = selectedArrowColor;
+    self.selectedArrowImage = [self drawArrowImageWithWidth:10 height:10 color:selectedArrowColor];
+    _arrowImageView.image = self.isSeleted ? self.selectedArrowImage : self.normalArrowImage;
+}
+
+- (void)setIsSeleted:(BOOL)isSeleted{
+    if (_isSeleted == isSeleted) {
+        return;
+    }
+    _isSeleted = isSeleted;
+    [self updateStyle];
+}
+
 #pragma mark - Actions
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture{
+    _isSeleted = !_isSeleted;
+    self.titleLabel.textColor = _isSeleted ? self.selectedArrowColor : self.normalArrowColor;
     tapGesture.enabled = NO;
     if (self.tapDropDownMenuTitleViewBlock) {
         self.tapDropDownMenuTitleViewBlock(self);
@@ -89,6 +126,13 @@
 #pragma mark - PublicMethod
 
 - (void)startArrowAnimationWithCompletion:(void (^)(BOOL finished))completion{
+    _arrowImageView.image = self.isSeleted ? self.selectedArrowImage : self.normalArrowImage;
+
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.1f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade;
+    [_arrowImageView.layer addAnimation:transition forKey:nil];
     [UIView animateWithDuration:0.36 animations:^{
         _arrowImageView.transform = CGAffineTransformRotate(_arrowImageView.transform, - M_PI);
     }completion:completion];
@@ -163,7 +207,7 @@
                                                       constant:-5]];
 }
 
-- (UIImage *)drawArrowImageWithWidth:(CGFloat)width height:(CGFloat)height{
+- (UIImage *)drawArrowImageWithWidth:(CGFloat)width height:(CGFloat)height color:(UIColor *)color{
     width = width * 3;
     height = height * 3;
     UIGraphicsBeginImageContext(CGSizeMake(width, height));
@@ -174,22 +218,19 @@
     sPoints[2] =CGPointMake(width / 2, height);
     CGContextAddLines(context, sPoints, 3);
     CGContextClosePath(context);
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
     CGContextDrawPath(context, kCGPathFillStroke);
     UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return theImage;
 }
 
-CATransform3D CATransform3DMakePerspective(CGPoint center, float disZ){
-    CATransform3D transToCenter = CATransform3DMakeTranslation(-center.x, -center.y, 0);
-    CATransform3D transBack = CATransform3DMakeTranslation(center.x, center.y, 0);
-    CATransform3D scale = CATransform3DIdentity;
-    scale.m34 = -1.0f / disZ;
-    return CATransform3DConcat(CATransform3DConcat(transToCenter, scale), transBack);
-}
-
-CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ){
-    return CATransform3DConcat(t, CATransform3DMakePerspective(center, disZ));
+- (void)updateStyle{
+    self.titleLabel.textColor = _isSeleted ? self.selectedArrowColor : self.normalArrowColor;
+    [self startArrowAnimationWithCompletion:^(BOOL finished) {
+        
+    }];
 }
 
 @end

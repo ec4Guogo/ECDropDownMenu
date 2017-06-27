@@ -26,6 +26,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        self.clipsToBounds = YES;
         self.tableView.frame = self.bounds;
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
         [self addSubview:self.tableView];
@@ -95,6 +96,9 @@
 - (void)showInView:(UIView *)view{
     self.isVisiable = YES;
     self.frame = view.bounds;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(frameForDropDownMenuView:)]) {
+        self.frame = [self.delegate frameForDropDownMenuView:self];
+    }
     [view addSubview:self];
     CGRect frame = self.tableView.frame;
     

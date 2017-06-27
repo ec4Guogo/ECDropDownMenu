@@ -27,7 +27,8 @@
     _menuTableView.dataSource = self;
     _titleView = [[ECDropDownMenuTitleView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     _titleView.title = @"测试标题测测试标题测测试标题测测试标题测测试标题测";
-    
+    _titleView.selectedArrowColor = [UIColor redColor];
+    _titleView.normalArrowColor = [UIColor blueColor];
     __weak ViewController *weakSelf = self;
     [_titleView setTapDropDownMenuTitleViewBlock:^(ECDropDownMenuTitleView *titleView) {
         if (weakSelf.menuTableView.isVisiable) {
